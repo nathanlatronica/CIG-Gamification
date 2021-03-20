@@ -7,6 +7,7 @@ const port = process.env.PORT || 8000;
 app.set("view engine", "ejs");
 app.use(express.static("public")); //folder for images, css, js
 app.use('/public', express.static('public'));
+app.use(express.static("css"));
 app.use(bodyParser.json())
 
 
