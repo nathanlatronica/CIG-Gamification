@@ -1,3 +1,84 @@
-h1{
+h1 {
+    text-align: center;
+}
+#center{
     text-align:center;
 }
+.question {
+    font-size: x-large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+.answer{
+    font-family:'Times New Roman', Times, serif;
+    font-variant:small-caps;
+}
+#title {
+    font-size:x-large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-variant: small-caps;
+    font-weight: bold;
+    text-align: center;
+}
+p {
+    font-family: 'Times New Roman', Times, serif;
+    font-variant: small-caps;
+    text-align: center;
+    font-size:large;
+}
+
+/*button css*/
+.button {
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 20px;
+    letter-spacing: 4px;
+    position: relative;
+    background-color: #16a085;
+    border: none;
+    color: #fff;
+    padding: 20px;
+    height: 90px;
+    width: 250px;
+    text-align: center;
+    transition-duration: 0.4s;
+    overflow: hidden;
+    box-shadow: 0 5px 15px #193047;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+
+.button:hover {
+    background: #fff;
+    box-shadow: 0px 2px 10px 5px #1abc9c;
+    color: #000;
+}
+
+.button:after {
+    content: "";
+    background: #1abc9c;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+.button:focus {
+    outline: 0;
+}
+/*End of button css*/
