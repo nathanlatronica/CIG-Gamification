@@ -15,6 +15,10 @@ app.get("/",  function(req, res){
     res.render("test");
   });
 
+app.get("/buckets",  function(req, res){    
+  res.render("buckets");
+});
+
 //starting server
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}!`)
