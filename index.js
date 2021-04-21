@@ -15,9 +15,21 @@ app.get("/",  function(req, res){
     res.render("test");
   });
 
-app.get("/buckets",  function(req, res){    
-  res.render("buckets");
+// ~~~ Start functions for buckets.ejs ~~~
+
+app.get("/buckets",  function(req, res){   
+  let galClick = 3;
+
+  //$("btn5g").on("click", bucketsOfWater);
+  //$("btn3g").on("click", bucketsOfWater);
+
+  //galClick++;
+  //$("#displayTries").html(galClick);
+
+  res.render("buckets", {'displayTries' : galClick});
 });
+
+// ~~~ End functions for buckets.ejs ~~~
 
 //starting server
 app.listen(port, () => {
