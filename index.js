@@ -17,8 +17,8 @@ app.get("/",  function(req, res){
 
 // ~~~ Start functions for buckets.ejs ~~~
 
-app.get("/buckets",  function(req, res){   
-  let galClick = 3;
+//app.get("/buckets",  function(req, res){   
+//  let galClick = 3;
 
   //$("btn5g").on("click", bucketsOfWater);
   //$("btn3g").on("click", bucketsOfWater);
@@ -26,8 +26,8 @@ app.get("/buckets",  function(req, res){
   //galClick++;
   //$("#displayTries").html(galClick);
 
-  res.render("buckets", {'displayTries' : galClick});
-});
+//  res.render("buckets", {'displayTries' : galClick});
+//});
 
 // ~~~ End functions for buckets.ejs ~~~
 
