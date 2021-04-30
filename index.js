@@ -1,24 +1,73 @@
-const express = require("express");
-const session = require('express-session');
+var express = require('express');
+var app = express();
 const mysql = require("mysql");
-const app = express();
 const bodyParser = require("body-parser");
+
+const { Timer } = require('timer-node');
+const timer = new Timer({ label: 'test-timer' });
+
+
+
 const port = process.env.PORT || 8000;
 
-app.set("view engine", "ejs");
-app.use(express.static("public")); //folder for images, css, js
-app.use('/public', express.static('public'));
-app.use(express.static("css"));
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json())
-
+app.use(express.urlencoded({ extended: true}));
 
 app.get("/",  function(req, res){    
     res.render("test");
+    timer.start();
+    console.log(timer.time());
+
+
   });
 
 app.get("/userInfo",  function(req, res){    
   res.render("userInfo");
-});  
+});
+
+app.get("/problemOne",  function(req, res){    
+  res.render("problemOne");
+});
+
+
+app.post('/storeUserInfo', async function(req, res) {
+  //console.log("Name: " + req.body.name)\\
+
+
+  let rows = await userInfoAction(req.body);
+
+
+  res.render('problemOne');
+
+
+});
+
+function userInfoAction(body){
+   
+  let conn = dbConnection();
+   
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+          console.log("Connected userInfo!");
+       
+          let sql = `INSERT INTO userinfo
+                       (name, email)
+                        VALUES (?,?)`;
+       
+          let params = [body.name, body.email];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       
+       });//connect
+   });//promise 
+}
 
   //This allows us to connect to the database it uses heroku its called JawsDB
 function dbConnection(){
@@ -42,13 +91,13 @@ function dbSetup() {
     Not 100% sure yet what we are gonna store so its kinda blank
     Could be multiple choice questions... There is  name and email .. etc
     */
-  var createUserInfo = `CREATE TABLE IF NOT EXISTS UserInfo
+  var createuserinfo = `CREATE TABLE IF NOT EXISTS userinfo
                       (id int NOT NULL AUTO_INCREMENT,
                       name varchar(60) NOT NULL,
                       email varchar(75) NOT NULL,
                       PRIMARY KEY(id)
                       );`
-  connection.query(createUserInfo, function (err, rows, fields) {
+  connection.query(createuserinfo, function (err, rows, fields) {
       if (err) {
           throw err
       }
