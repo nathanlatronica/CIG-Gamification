@@ -1,15 +1,16 @@
 <%- include('partials/header') -%>
       <h1>CIG Talent Acquisition</h1> <hr>
 
-      <label for="fname">What is your name?</label>
-      <input type="text" id="fname" name="fname"><br><br>
+      <form action="/storeUserInfo" method="POST">
+      
+            <label for="name">Name</label>
+            <input id="user" name="name" placeholder="Enter Name"/>
+            <br>
+            <label for="email">Email</label>
+            <input id="email" name="email" placeholder="Enter Email"/>
+            <br>
+            <button>Start</button>
 
-      <label for="email">What is your email?</label>
-      <input type="text" id="email" name="email"><br><br>
-
-      <h3>Click to start the test</h3>
-      <button type="button">Start</button>
-
-
+      </form>
 
 <%- include('partials/footer') -%>
