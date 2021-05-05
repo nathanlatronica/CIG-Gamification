@@ -49,6 +49,121 @@
     <p>This is how many times you have tried: <a id="displayTries"></a></p>
 
   <!-- <img class="imgStyle" src="/img/.png" alt="" > -->
+
+  <script>
+    //Variables
+    let galClick = 0;
+    let water5g = 0;
+    let water3g = 0;
+
+    $("#5gAmount").html(water5g);
+    $("#3gAmount").html(water3g);
+
+
+    //Function calls
+    $("#btn5gF").on("click", bucketsOfWaterFill5G);
+    $("#btn3gF").on("click", bucketsOfWaterFill3G);
+
+    $("#btn5gt3g").on("click", bucketsOfWaterTranser5t3);
+    $("#btn3gt5g").on("click", bucketsOfWaterTranser3t5);
+
+    $("#btn5gE").on("click", bucketsOfWaterEmpty5G);
+    $("#btn3gE").on("click", bucketsOfWaterEmpty3G);
+
+
+    //Functions
+    function bucketsOfWaterFill5G() 
+    {
+      galClick++;
+      water5g = 5;
+
+      $("#displayTries").html(galClick);
+
+      $("#5gAmount").html(water5g);
+
+    }
+
+    function bucketsOfWaterFill3G() 
+    {
+      galClick++;
+      water3g = 3;
+
+      $("#displayTries").html(galClick);
+
+      $("#3gAmount").html(water3g);
+
+    }
+
+    function bucketsOfWaterTranser5t3() 
+    {
+      galClick++;
+
+      $("#displayTries").html(galClick);
+
+      //Validate water amounts
+      if (water5g > 5)
+      {
+        water5g = 5;
+      }
+
+      if (water3g > 3)
+      {
+        water3g = 3;
+      }
+
+      $("#5gAmount").html(water5g);
+
+      $("#3gAmount").html(water3g);
+
+    }
+
+    function bucketsOfWaterTranser3t5() 
+    {
+      galClick++;
+
+      $("#displayTries").html(galClick);
+
+      //Validate water amounts
+      if (water5g > 5)
+      {
+        water5g = 5;
+      }
+
+      if (water3g > 3)
+      {
+        water3g = 3;
+      }
+
+      $("#5gAmount").html(water5g);
+
+      $("#3gAmount").html(water3g);
+
+    }
+
+    function bucketsOfWaterEmpty5G() 
+    {
+      galClick++;
+      water5g = 0;
+
+      $("#displayTries").html(galClick);
+
+      $("#5gAmount").html(water5g);
+
+    }
+
+    function bucketsOfWaterEmpty3G() 
+    {
+      galClick++;
+      water3g = 0;
+
+      $("#displayTries").html(galClick);
+
+      $("#3gAmount").html(water3g);
+
+    }
+
+    
+  </script>
  
 </body>
   
