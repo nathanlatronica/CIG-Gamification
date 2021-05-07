@@ -1,13 +1,14 @@
 <%- include('partials/header') -%>
+<%- include('partials/navbar') -%>
 
 <html>
 <head>
   <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <title>Buckets</title>
 </head>
 <body>
 
-  <a href="/">Home</a>
   <hr>
 
   <h1>Buckets of Water</h1>
@@ -15,7 +16,154 @@
   <p>There is a 3 gallon bucket and a 5 gallon bucket, but the shape of the buckets is not uniform. 
     Get exactly 4 gallons of water.</p>
 
+    <div>
+      <button class="buttonPlaceholder" id="btn5g"><img src="/img/buckets/BucketofWater5G0.png"></button>
+
+      <button class="buttonPlaceholder" id="btn3g"><img src="/img/buckets/BucketofWater3G0.png"></button>
+    </div>
+
+    <div>
+      <button class="buttonPlaceholder" id="btn5gF">Fill 5G</button>
+
+      <button class="buttonPlaceholder" id="btn3gF">Fill 3G</button>
+    </div>
+
+    <div>
+      <button class="buttonPlaceholder" id="btn5gt3g">5G to 3G</button>
+
+      <button class="buttonPlaceholder" id="btn3gt5g">3G to 5G</button>
+    </div>
+
+    <div>
+      <button class="buttonPlaceholder" id="btn5gE">Empty 5G</button>
+
+      <button class="buttonPlaceholder" id="btn3gE">Empty 3G</button>
+    </div>
+
+    <p>The 5 gallon bucket has  <strong><a id="5gAmount"></a></strong> gallons of water.</p>
+
+    <p>The 3 gallon bucket has  <strong><a id="3gAmount"></a></strong> gallons of water.</p>
+
+    <hr>
+
+    <p>This is how many times you have tried: <a id="displayTries"></a></p>
+
   <!-- <img class="imgStyle" src="/img/.png" alt="" > -->
+
+  <script>
+    //Variables
+    let galClick = 0;
+    let water5g = 0;
+    let water3g = 0;
+
+    $("#5gAmount").html(water5g);
+    $("#3gAmount").html(water3g);
+
+
+    //Function calls
+    $("#btn5gF").on("click", bucketsOfWaterFill5G);
+    $("#btn3gF").on("click", bucketsOfWaterFill3G);
+
+    $("#btn5gt3g").on("click", bucketsOfWaterTranser5t3);
+    $("#btn3gt5g").on("click", bucketsOfWaterTranser3t5);
+
+    $("#btn5gE").on("click", bucketsOfWaterEmpty5G);
+    $("#btn3gE").on("click", bucketsOfWaterEmpty3G);
+
+
+    //Functions
+    function bucketsOfWaterFill5G() 
+    {
+      galClick++;
+      water5g = 5;
+
+      $("#displayTries").html(galClick);
+
+      $("#5gAmount").html(water5g);
+
+    }
+
+    function bucketsOfWaterFill3G() 
+    {
+      galClick++;
+      water3g = 3;
+
+      $("#displayTries").html(galClick);
+
+      $("#3gAmount").html(water3g);
+
+    }
+
+    function bucketsOfWaterTranser5t3() 
+    {
+      galClick++;
+
+      $("#displayTries").html(galClick);
+
+      //Validate water amounts
+      if (water5g > 5)
+      {
+        water5g = 5;
+      }
+
+      if (water3g > 3)
+      {
+        water3g = 3;
+      }
+
+      $("#5gAmount").html(water5g);
+
+      $("#3gAmount").html(water3g);
+
+    }
+
+    function bucketsOfWaterTranser3t5() 
+    {
+      galClick++;
+
+      $("#displayTries").html(galClick);
+
+      //Validate water amounts
+      if (water5g > 5)
+      {
+        water5g = 5;
+      }
+
+      if (water3g > 3)
+      {
+        water3g = 3;
+      }
+
+      $("#5gAmount").html(water5g);
+
+      $("#3gAmount").html(water3g);
+
+    }
+
+    function bucketsOfWaterEmpty5G() 
+    {
+      galClick++;
+      water5g = 0;
+
+      $("#displayTries").html(galClick);
+
+      $("#5gAmount").html(water5g);
+
+    }
+
+    function bucketsOfWaterEmpty3G() 
+    {
+      galClick++;
+      water3g = 0;
+
+      $("#displayTries").html(galClick);
+
+      $("#3gAmount").html(water3g);
+
+    }
+
+    
+  </script>
  
 </body>
   

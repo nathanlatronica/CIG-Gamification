@@ -23,6 +23,11 @@ app.get("/",  function(req, res){
 
   });
 
+app.get("/buckets",  function(req, res){   
+  
+  res.render("buckets");
+});
+
 app.get("/userInfo",  function(req, res){    
   res.render("userInfo");
 });

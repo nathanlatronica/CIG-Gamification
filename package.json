@@ -19,8 +19,6 @@
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "mysql": "^2.18.1",
-    "timer-node": "^5.0.3"
+    "express-session": "^1.17.1"
   }
 }

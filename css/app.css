@@ -82,3 +82,39 @@ p {
     outline: 0;
 }
 /*End of button css*/
+
+/* Link styles */
+a:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+  /* Placeholder button styles */
+  .buttonPlaceholder {
+    border-radius: 8px;
+    border: 2px solid cornsilk;
+    color: white;
+    background-color: black;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
