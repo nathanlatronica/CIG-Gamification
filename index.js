@@ -23,6 +23,13 @@ app.get("/",  function(req, res){
 
   });
 
+app.get("/welcome",  function(req, res){   
+   res.render("welcome");
+});
+app.get("/home",  function(req, res){   
+  res.render("home");
+});
+  
 app.get("/buckets",  function(req, res){   
   
   res.render("buckets");
