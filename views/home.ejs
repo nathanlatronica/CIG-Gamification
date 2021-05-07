@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<style>
+    *{
+        margin: 0;
+        background: #ffffff;
+    }
+
+    body{
+        font-family: sans-serif;
+    }
+
+    .container{
+        height: 250px;
+        left: 0px;
+        top: 133px;
+        text-align: center;
+
+        background: #EFEFEF;
+    }
+    /* Welcome! */
+    p{ 
+        position:absolute; 
+        width:100%;
+        height: 129px;
+        top: 220px;
+
+        font-weight: normal;
+        font-size: 36px;
+        line-height: 42px;
+        text-align: center;
+        
+        background: #EFEFEF;
+        color: #000000;
+    }
+
+    .multiple-choice{
+        position:absolute;
+        text-align: center;
+        border-color:transparent;
+        left: 251px;
+        top: 455px;
+        font-size: 36px;
+    }
+
+    .puzzle{
+        position:absolute;
+        text-align: center;
+        border-color:transparent;
+        left: 673px;
+        top: 455px;
+        font-size: 36px;
+    }
+
+    .coding{
+        position:absolute;
+        text-align: center;
+        border-color:transparent;
+        left: 1057px;
+        top: 455px;
+        font-size: 36px;
+    }
+    .problem-text{
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: transparent;
+        color: white;
+    }
+
+</style>
+
+<body>
+
+    <div class="logo">
+        <img src="/img/logo.png" style="width: 281px; height:auto"/>
+     </div>
+
+    <div class="container">
+        <p>Please complete the following to the <br> best of your abilities:</p>
+    </div>
+
+    <div class="multiple-choice">
+        <img src="/img/home/orange.png" style="width: 301px; height:301"/>
+         <div class="problem-text">Multiple<br>Choice</div>
+         <div class="multiple-percentage">0%</div>
+    </div>
+
+    <div class="puzzle">
+        <img src="/img/home/teal.png" style="width: 301px; height:301"/>
+         
+         <a href="/buckets">
+            <div class="problem-text">Problem<br>Solving<br>Puzzles</div>
+        </a>
+         <div class="puzzle-percentage">0%</div>
+    </div>
+
+    <div class="coding">
+        <img src="/img/home/pink.png" style="width: 301px; height:301"/>
+         <div class="problem-text">Coding<br>Challenges</div>
+         <div class="coding-percentage">0%</div>
+    </div>
+</body>
+</html>
