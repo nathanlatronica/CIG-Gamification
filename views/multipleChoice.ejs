@@ -1,0 +1,52 @@
+<%- include('partials/header') -%>
+
+<div class = "mainContainer">
+    <h1>Multiple Choice Questions</h1>
+
+    <form action="/gradeMultipleChoice" method="POST">
+        <input type="hidden" name="name" value="<%=user%>">
+        <input type="hidden" name="email" value="<%=email%>">
+
+
+
+        Which of the following is used to write comments?<br>
+        <input type="radio" name="question1" value="/// comment ///">
+        <label >/// comment ///</label><br>
+        <input type="radio" name="question1" value="/* comment */"> <!---Correct-->
+        <label >/* comment */</label><br>
+        <input type="radio"name="question1" value="//  comment */">
+        <label >//  comment */</label>
+
+        <br><br>Which of the following is called the address operator?<br>
+        <input type="radio" name="question2" value="&"><!---Correct-->
+        <label for="male">&</label><br>
+        <input type="radio" name="question2" value="%">
+        <label for="female">%</label><br>
+        <input type="radio"name="question2" value="*">
+        <label for="other">*</label>
+
+        <br><br>The process of building new classes from existing ones is called?<br>
+        <input type="radio" name="question3" value="Inheritance"><!---Correct-->
+        <label >Inheritance</label><br>
+        <input type="radio" name="question3" value="Polymorphism">
+        <label >Polymorphism</label><br>
+        <input type="radio"name="question3" value="Structure">
+        <label >Structure</label>
+
+        <br><br>In c++, dynamic memory allocation is associated with which operator?<br>
+        <input type="radio" name="question4" value="malloc()">
+        <label >malloc()</label><br>
+        <input type="radio" name="question4" value="this">
+        <label >this</label><br>
+        <input type="radio"name="question4" value="new"><!---Correct-->
+        <label >new</label>
+        
+
+        <button>Submit</button>
+
+    </form>
+
+
+</div>
+
+<%- include('partials/footer') -%>

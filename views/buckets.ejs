@@ -48,6 +48,14 @@
 
     <p>This is how many times you have tried: <a id="displayTries"></a></p>
 
+    <form action="/bucketSubmit" method="POST">
+      <input type="hidden" name="name" value="<%=user%>">
+      <input type="hidden" name="email" value="<%=email%>">
+
+      <input name="bucketGuess" placeholder="Enter answer">
+      <button>Submit</button>
+
+    </form>
   <!-- <img class="imgStyle" src="/img/.png" alt="" > -->
 
   <script>

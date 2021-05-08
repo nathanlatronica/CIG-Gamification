@@ -88,24 +88,48 @@
     </div>
 
     <div class="multiple-choice">
-        <img src="/img/home/orange.png" style="width: 301px; height:301"/>
-         <div class="problem-text">Multiple<br>Choice</div>
-         <div class="multiple-percentage">0%</div>
+        <form action="/startQuiz" method="POST">
+            <input type="hidden" name="name" value="<%=user%>">
+            <input type="hidden" name="email" value="<%=email%>">
+
+            <img src="/img/home/orange.png" style="width: 301px; height:301"/>
+            <div class="problem-text">
+                Multiple<br>Choice
+                <button>Start</button>
+            </div>
+            <div class="multiple-percentage">0%</div>
+        </form>
     </div>
 
     <div class="puzzle">
-        <img src="/img/home/teal.png" style="width: 301px; height:301"/>
+        <form action="/startPuzzles" method="POST">
+            <input type="hidden" name="name" value="<%=user%>">
+            <input type="hidden" name="email" value="<%=email%>">
+
+            <img src="/img/home/teal.png" style="width: 301px; height:301"/>
          
-         <a href="/buckets">
-            <div class="problem-text">Problem<br>Solving<br>Puzzles</div>
-        </a>
-         <div class="puzzle-percentage">0%</div>
+            <div class="problem-text">
+                Problem<br>Solving<br>Puzzles
+                <button >Start</button>
+            </div>
+
+            <div class="puzzle-percentage"><%=puzzlePercent%></div>
+        </form>
     </div>
 
     <div class="coding">
-        <img src="/img/home/pink.png" style="width: 301px; height:301"/>
-         <div class="problem-text">Coding<br>Challenges</div>
-         <div class="coding-percentage">0%</div>
+        <form action="/startCoding" method="POST">
+            <input type="hidden" name="name" value="<%=user%>">
+            <input type="hidden" name="email" value="<%=email%>">
+
+            <img src="/img/home/pink.png" style="width: 301px; height:301"/>
+            <div class="problem-text">
+                Coding<br>Challenges
+                <button>Start</button>
+            </div>
+
+            <div class="coding-percentage">0%</div>
+        </form>
     </div>
 </body>
 </html>
