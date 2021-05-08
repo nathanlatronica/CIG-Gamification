@@ -60,8 +60,22 @@
 </style>
 <%- include('partials/header') -%>
 	<div class="container ">
-		<div class="header">Header</div>
-		<div class="content-small">Question 1</div>
+		<div class="header">Coin Problem</div>
+		<div class="content-small">
+			<p>[WIP] Before you is a scale and eight coins, but one coin secretly weighs less. What is the minimum number of times you need to use the scale to figure out which coin weighs less?</p>
+			<br>
+			<p>Use the game on the screen to help you figure out the best strategy!</p>
+			<form action="/coinSubmit" method="POST">
+				<input type="hidden" name="name" value="<%=user%>">
+
+				<label for="coinGuess">Answer</label>
+				<input id="coin" name="coinGuess" placeholder="10"/>
+				<br>
+				<button>Submit</button>
+	
+		  </form>
+
+		</div>
 		<div class="content-large"><iframe src="https://i.simmer.io/@roccoestrada/coin-puzzle" style="width:100%;height:100%;border:0"></iframe></div>
 		<div class="footer">Footer</div>
 	</div>

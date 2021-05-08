@@ -44,17 +44,33 @@ app.get("/problemOne",  function(req, res){
 });
 
 
-app.post('/storeUserInfo', async function(req, res) {
-  //console.log("Name: " + req.body.name)\\
-
-
+app.post('/start', async function(req, res) {
+  let user = req.body.name;
+  let email = req.body.email;
+  
   let rows = await userInfoAction(req.body);
 
-
-  res.render('problemOne');
-
-
+  res.render('problemOne.ejs', {user, email });
 });
+
+app.post("/probOneSubmit", function(req, res){   
+  let user = req.body.name;
+  let email = req.body.email;
+
+  res.render("coin", {user, email });
+});
+
+app.post("/coinSubmit", async function(req, res){ 
+  let user = req.body.name 
+  let email = req.body.email
+
+  let rows = await coinSubmit(req.body);
+
+  res.render("/problemTwo");
+});
+
+
+
 
 function userInfoAction(body){
    
@@ -70,6 +86,30 @@ function userInfoAction(body){
                         VALUES (?,?)`;
        
           let params = [body.name, body.email];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       
+       });//connect
+   });//promise 
+}
+
+function coinSubmit(body){
+   
+  let conn = dbConnection();
+   
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+       
+          let sql = `UPDATE userinfo
+                     SET coinProblem =?
+                     WHERE name =?`;
+       
+          let params = [body.coinGuess, body.name];
           conn.query(sql, params, function (err, rows, fields) {
              if (err) throw err;
              //res.send(rows);
