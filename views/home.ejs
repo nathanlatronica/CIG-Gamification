@@ -88,7 +88,7 @@
     </div>
 
     <div class="multiple-choice">
-        <form action="/startQuiz" method="POST">
+        <form action="/startQuiz" method="POST"> <!--This form takes you to the multiple choice page when clicked calls /startQuiz-->
             <input type="hidden" name="name" value="<%=user%>">
             <input type="hidden" name="email" value="<%=email%>">
 
@@ -102,7 +102,7 @@
     </div>
 
     <div class="puzzle">
-        <form action="/startPuzzles" method="POST">
+        <form action="/startPuzzles" method="POST"> <!--This form takes you to the coin puzzle page when clicked calls /startPuzzles-->
             <input type="hidden" name="name" value="<%=user%>">
             <input type="hidden" name="email" value="<%=email%>">
 
@@ -118,7 +118,7 @@
     </div>
 
     <div class="coding">
-        <form action="/startCoding" method="POST">
+        <form action="/startCoding" method="POST"> <!--This form takes you to the problemOne page when clicked calls /startCoding-->
             <input type="hidden" name="name" value="<%=user%>">
             <input type="hidden" name="email" value="<%=email%>">
 
