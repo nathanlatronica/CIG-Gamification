@@ -67,9 +67,10 @@
 			<p>Use the game on the screen to help you figure out the best strategy!</p>
 			<form action="/coinSubmit" method="POST">
 				<input type="hidden" name="name" value="<%=user%>">
+				<input type="hidden" name="email" value="<%=email%>">
 
 				<label for="coinGuess">Answer</label>
-				<input id="coin" name="coinGuess" placeholder="10"/>
+				<input id="coin" type="number" min="1" max="100" name="coinGuess" placeholder="10"/>
 				<br>
 				<button>Submit</button>
 	
