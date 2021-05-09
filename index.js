@@ -6,8 +6,6 @@ const bodyParser = require("body-parser");
 const { Timer } = require('timer-node');
 const timer = new Timer({ label: 'test-timer' });
 
-
-
 const port = process.env.PORT || 8000;
 
 app.set('view engine', 'ejs');
@@ -15,17 +13,16 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true}));
 
-app.get("/",  function(req, res){    
+app.get("/",  function(req, res){    //Starting Page 
     res.render("welcome");
-
   });
 
-  app.get("/signUp",  function(req, res){    
+  app.get("/signUp",  function(req, res){    //Page were you type name/email...etc
     res.render("UserInfo");
 
   });
 
-app.post('/start', async function(req, res) {
+app.post('/start', async function(req, res) { // The action of going from signup to home page and saving userinfo to database(DB)
   let user = req.body.name;
   let email = req.body.email;
 
@@ -35,35 +32,35 @@ app.post('/start', async function(req, res) {
   res.render('home.ejs', {user, email, puzzlePercent });
 });
 
-app.post('/startPuzzles', async function(req, res) {
+app.post('/startPuzzles', async function(req, res) { // The action of going from home to coin game page 
   let user = req.body.name;
   let email = req.body.email;
 
   res.render('coin.ejs', {user, email });
 });
 
-app.post('/startCoding', async function(req, res) {
+app.post('/startCoding', async function(req, res) { // The action of going from home to the coding challeges, problemOne page Specifically 
   let user = req.body.name;
   let email = req.body.email;
 
   res.render('problemOne.ejs', {user, email });
 });
 
-app.post('/startQuiz', async function(req, res) {
+app.post('/startQuiz', async function(req, res) { // The action of going from home to multiple choice quiz page 
   let user = req.body.name;
   let email = req.body.email;
 
   res.render('multipleChoice.ejs', {user, email });
 });
 
-app.post("/probOneSubmit", function(req, res){   
+app.post("/probOneSubmit", function(req, res){ //the action of submitting coding challenge 1 and goin to problemTwo
   let user = req.body.name;
   let email = req.body.email;
 
   res.render("probTwo", {user, email });
 });
 
-app.post("/coinSubmit", async function(req, res){ 
+app.post("/coinSubmit", async function(req, res){ //The action of submitting the coin puzzle to the DB and going to the bucket challenge
   let user = req.body.name 
   let email = req.body.email
   console.log(req.body)
@@ -73,7 +70,7 @@ app.post("/coinSubmit", async function(req, res){
   res.render("buckets.ejs", {user, email});
 });
 
-app.post("/bucketSubmit", async function(req, res){ 
+app.post("/bucketSubmit", async function(req, res){ //The action of submitting the bucket puzzle to the DB and going back to the home page 
   let user = req.body.name 
   let email = req.body.email
   let puzzleStatus = ""
@@ -87,7 +84,7 @@ app.post("/bucketSubmit", async function(req, res){
   res.render("home.ejs", {user, email, puzzlePercent});
 });
 
-app.post("/gradeMultipleChoice",  function(req, res){ 
+app.post("/gradeMultipleChoice",  function(req, res){ //This is the action of submitting the multiple choice page to the DB and go to some page undetermined
   console.log(req.body)
   let correct = 0;
   if(req.body.question1 == "/* comment */") {
@@ -102,7 +99,7 @@ app.post("/gradeMultipleChoice",  function(req, res){
 });
 
 
-async function getPuzzlePercent(body){
+async function getPuzzlePercent(body){ // This function is used to figure out the percentage for the puzzzles on the home page
   let puzzlesDone = await puzzleProgress(body)
   let puzzlePercent = ""
 
@@ -118,7 +115,7 @@ async function getPuzzlePercent(body){
 
 }
 
-function userInfoAction(body){
+function userInfoAction(body){ // This function submits the user info to the DB like name, email, linkedIn....etc
    
   let conn = dbConnection();
    return new Promise(function(resolve, reject){
@@ -142,7 +139,7 @@ function userInfoAction(body){
    });//promise 
 }
 
-function coinSubmit(body){
+function coinSubmit(body){ //This function will submit the users answer for the coin problem to the DB
   
   let conn = dbConnection();
    return new Promise(function(resolve, reject){
@@ -164,7 +161,7 @@ function coinSubmit(body){
    });//promise 
 }
 
-function bucketSubmit(body){
+function bucketSubmit(body){ //This function will submit the users answer for the bucket problem to the DB
    
   let conn = dbConnection();
    return new Promise(function(resolve, reject){
@@ -187,7 +184,7 @@ function bucketSubmit(body){
 }
 
 
-function puzzleProgress(body){
+function puzzleProgress(body){ //This function gets users puzzle answers to help get the percentage done for the home page
    
   let conn = dbConnection();
    return new Promise(function(resolve, reject){
@@ -223,7 +220,7 @@ function dbConnection(){
 }
 
 
-function dbSetup() {
+function dbSetup() { // This creates the table to insert data for the DB
   let connection = dbConnection();
   
   connection.connect()
@@ -248,7 +245,7 @@ function dbSetup() {
   
 dbSetup()
 
-//starting server
+//This lets us connect to the page
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}!`)
   });
