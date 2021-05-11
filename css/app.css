@@ -118,3 +118,10 @@ a:link {
     transition-duration: 0.4s;
     cursor: pointer;
   }
+
+/* img css */
+
+#img{
+    height:400px;
+    width:600px;
+}

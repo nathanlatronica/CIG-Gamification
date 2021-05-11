@@ -9,6 +9,8 @@ const timer = new Timer({ label: 'test-timer' });
 const port = process.env.PORT || 8000;
 
 app.set('view engine', 'ejs');
+app.use(express.static("css"));
+app.use(express.static("img"));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true}));
