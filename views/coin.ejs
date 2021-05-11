@@ -13,7 +13,7 @@
 		display: grid;
 
 		grid-template-columns: repeat(3, 55%);
-		grid-template-rows: 50px 1fr 1fr 100px;
+		grid-template-rows: 100px 1fr 1fr 100px;
 
 		gap: 10px;
 
@@ -25,8 +25,6 @@
 
 	.container div {
 		margin: 0;
-		padding: 10px;
-		border: 1px solid #000000;
 	}
 
 	.header {
@@ -39,6 +37,7 @@
 		grid-row-end: span 2;
 		grid-column-start: 1;
 		grid-column-end: 2;
+		background-color: #EFEFEF;
 		
 	}
 	
@@ -60,11 +59,16 @@
 </style>
 <%- include('partials/header') -%>
 	<div class="container ">
-		<div class="header">Coin Problem</div>
+		<div class="logo">
+			<img src="/img/logo.png" style="width: 241px; height:auto"/>
+		</div>
 		<div class="content-small">
-			<p>[WIP] Before you is a scale and eight coins, but one coin secretly weighs less. What is the minimum number of times you need to use the scale to figure out which coin weighs less?</p>
-			<br>
-			<p>Use the game on the screen to help you figure out the best strategy!</p>
+			<h1 style="font-size: 36px;">Fake Coin</h1>
+				<p>
+					There are eight identical looking coins but one coin is a counterfeit and is known to be lighter than the rest. 
+					What is the minimum number of weighings to identify the fake coin? Feel free to interact with the game to the right to help you
+					solve this puzzle.<br> <br>The fake coin is known therefore it is a different color than the rest.
+				</p>
 			<form action="/coinSubmit" method="POST">  <!--This form takes you to the buket puzzle when clicked calls /coinSubmit-->
 				<input type="hidden" name="name" value="<%=user%>">
 				<input type="hidden" name="email" value="<%=email%>">
@@ -78,7 +82,6 @@
 
 		</div>
 		<div class="content-large"><iframe src="https://i.simmer.io/@roccoestrada/coin-puzzle" style="width:100%;height:100%;border:0"></iframe></div>
-		<div class="footer">Footer</div>
 	</div>
 			
 <%- include('partials/footer') -%>
