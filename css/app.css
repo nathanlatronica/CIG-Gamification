@@ -81,7 +81,16 @@ p {
 .button:focus {
     outline: 0;
 }
-/*End of button css*/
+/*End of button css*//* Image Styles */
+.imgStyle
+{
+  width: 20%;
+  height: 20%;
+  transition: .5s ease;
+  padding-top: 10px;
+}
+
+
 
 /* Link styles */
 a:link {
