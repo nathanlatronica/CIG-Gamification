@@ -97,22 +97,24 @@ a:link {
     color: black;
     background-color: transparent;
     text-decoration: none;
-  }
+}
   
-  a:visited {
+a:visited {
     color: black;
     background-color: transparent;
     text-decoration: none;
-  }
+}
   
-  a:hover {
+a:hover {
     color: red;
     background-color: transparent;
     text-decoration: underline;
-  }
+}
 
-  /* Placeholder button styles */
-  .buttonPlaceholder {
+ /* Placeholder button styles */
+.buttonPlaceholder {
+    height: 200px;
+    width: 200px;
     border-radius: 8px;
     border: 2px solid cornsilk;
     color: white;
@@ -126,7 +128,13 @@ a:link {
     margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
-  }
+}
+
+.buttonPlaceholder:hover
+{
+    color:bisque;
+    border: 2px solid honeydew;
+}
 
 /* img css */
 
