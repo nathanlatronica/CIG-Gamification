@@ -113,12 +113,12 @@ a:hover {
 
  /* Placeholder button styles */
 .buttonPlaceholder {
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     border-radius: 8px;
-    border: 2px solid cornsilk;
+    border: 2px solid gray;
     color: white;
-    background-color: black;
+    background-color: #16a085;
     padding: 16px 32px;
     text-align: center;
     text-decoration: none;
@@ -132,7 +132,7 @@ a:hover {
 
 .buttonPlaceholder:hover
 {
-    color:bisque;
+    color:black;
     border: 2px solid honeydew;
 }
 
