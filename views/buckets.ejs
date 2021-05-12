@@ -97,9 +97,9 @@
    
     <div class="content-large">
       <div>
-        <button class="buttonPlaceholder" id="btn5g"><img src="/img/buckets/BucketofWater5G0.png"></button>
+        <img id="bucket5G" src="/img/buckets/BucketofWater5G0.png">
 
-        <button class="buttonPlaceholder" id="btn3g"><img src="/img/buckets/BucketofWater3G0.png"></button>
+        <img id="bucket3G" src="/img/buckets/BucketofWater3G0.png">
       </div>
 
       <div>
@@ -154,6 +154,8 @@
     {
       galClick++;
       water5g = 5;
+      image5gShake();
+      window.setTimeout( image5gShakeEnd, 500 );
 
       $("#displayTries").html(galClick);
 
@@ -165,6 +167,8 @@
     {
       galClick++;
       water3g = 3;
+      image3gShake();
+      window.setTimeout( image3gShakeEnd, 500 );
 
       $("#displayTries").html(galClick);
 
@@ -175,6 +179,8 @@
     function bucketsOfWaterTranser5t3() 
     {
       galClick++;
+      image5gShake();
+      window.setTimeout( image5gShakeEnd, 500 );
 
       $("#displayTries").html(galClick);
 
@@ -198,6 +204,8 @@
     function bucketsOfWaterTranser3t5() 
     {
       galClick++;
+      image3gShake();
+      window.setTimeout( image3gShakeEnd, 500 );
 
       $("#displayTries").html(galClick);
 
@@ -222,6 +230,8 @@
     {
       galClick++;
       water5g = 0;
+      image5gShake();
+      window.setTimeout( image5gShakeEnd, 500 );
 
       $("#displayTries").html(galClick);
 
@@ -233,11 +243,38 @@
     {
       galClick++;
       water3g = 0;
+      image3gShake();
+      window.setTimeout( image3gShakeEnd, 500 );
 
       $("#displayTries").html(galClick);
 
       $("#3gAmount").html(water3g);
 
+    }
+
+    //Image shake functions
+    function image5gShake()
+    { 
+      document.getElementById("bucket5G").style.animation = "shake";
+      document.getElementById("bucket5G").style.animationDuration = ".5s";
+      document.getElementById("bucket5G").style.animationIterationCount = "infinite";
+    }
+
+    function image5gShakeEnd(){
+      document.getElementById("bucket5G").style.animationDuration = "0s";
+      document.querySelector("body").style.height = "auto";
+    }
+
+    function image3gShake()
+    { 
+      document.getElementById("bucket3G").style.animation = "shake";
+      document.getElementById("bucket3G").style.animationDuration = ".5s";
+      document.getElementById("bucket3G").style.animationIterationCount = "infinite";
+    }
+
+    function image3gShakeEnd(){
+      document.getElementById("bucket3G").style.animationDuration = "0s";
+      document.querySelector("body").style.height = "auto";
     }
 
     
