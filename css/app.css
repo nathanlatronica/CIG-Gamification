@@ -136,6 +136,27 @@ a:hover {
     border: 2px solid honeydew;
 }
 
+/* Styles for footer partial */
+.column 
+{
+  float: left;
+  width: 50%;
+}
+
+.columnFooter
+{
+  float: left;
+  column-gap: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after 
+{
+  content: "";
+  display: table;
+  clear: both;
+}
+
 /* Shake animation styles */
 .shake:hover 
 {
