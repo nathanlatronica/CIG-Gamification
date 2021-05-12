@@ -81,33 +81,44 @@ p {
 .button:focus {
     outline: 0;
 }
-/*End of button css*/
+/*End of button css*//* Image Styles */
+.imgStyle
+{
+  width: 20%;
+  height: 20%;
+  transition: .5s ease;
+  padding-top: 10px;
+}
+
+
 
 /* Link styles */
 a:link {
     color: black;
     background-color: transparent;
     text-decoration: none;
-  }
+}
   
-  a:visited {
+a:visited {
     color: black;
     background-color: transparent;
     text-decoration: none;
-  }
+}
   
-  a:hover {
+a:hover {
     color: red;
     background-color: transparent;
     text-decoration: underline;
-  }
+}
 
-  /* Placeholder button styles */
-  .buttonPlaceholder {
+ /* Placeholder button styles */
+.buttonPlaceholder {
+    height: 150px;
+    width: 150px;
     border-radius: 8px;
-    border: 2px solid cornsilk;
+    border: 2px solid gray;
     color: white;
-    background-color: black;
+    background-color: #16a085;
     padding: 16px 32px;
     text-align: center;
     text-decoration: none;
@@ -117,7 +128,56 @@ a:link {
     margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
-  }
+}
+
+.buttonPlaceholder:hover
+{
+    color:black;
+    border: 2px solid honeydew;
+}
+
+/* Styles for footer partial */
+.column 
+{
+  float: left;
+  width: 50%;
+}
+
+.columnFooter
+{
+  float: left;
+  column-gap: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after 
+{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Shake animation styles */
+.shake:hover 
+{
+    /* Start the shake animation and make the animation last for 0.5 seconds */
+    animation: shake 0.5s;
+}
+  
+@keyframes shake 
+{
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
 
 /* img css */
 
