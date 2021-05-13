@@ -86,19 +86,41 @@ app.post("/bucketSubmit", async function(req, res){ //The action of submitting t
   res.render("home.ejs", {user, email, puzzlePercent});
 });
 
-app.post("/gradeMultipleChoice",  function(req, res){ //This is the action of submitting the multiple choice page to the DB and go to some page undetermined
-  console.log(req.body)
-  let correct = 0;
-  if(req.body.question1 == "/* comment */") {
-    correct++;
-  }
-  console.log(correct + " correct answers")
+app.post("/gradeMultipleChoice", async  function(req, res){ //This is the action of submitting the multiple choice page to the DB and go to some page undetermined
+  let correct = gradeMultipleChoice(req.body);
+  let rows = await multipleChoiceSubmit(req.body, correct);
+
 
 
   let user = req.body.name 
   let email = req.body.email
-  res.render("home", {user, email})
+  let puzzlePercent = await getPuzzlePercent(req.body)
+
+  res.render("home", {user, email, puzzlePercent})
 });
+
+
+//all non page rendering functions below.
+
+function gradeMultipleChoice(body){ // Will return the number of correct answers on multiple choice page
+  let correct = 0;
+  if(body.question1 == "option1") { correct++}
+  if(body.question2 == "option1") { correct++}
+  if(body.question3 == "option1") { correct++}
+  if(body.question4 == "option1") { correct++}
+  if(body.question5 == "option1") { correct++}
+  if(body.question6 == "option1") { correct++}
+  if(body.question7 == "option2") { correct++}
+  if(body.question8 == "option1") { correct++}
+  if(body.question9 == "option1") { correct++}
+  if(body.question10 == "option3") { correct++}
+
+  return correct;
+}
+
+function calculateScore(body) {
+  
+}
 
 
 async function getPuzzlePercent(body){ // This function is used to figure out the percentage for the puzzzles on the home page
@@ -113,8 +135,6 @@ async function getPuzzlePercent(body){ // This function is used to figure out th
     puzzlePercent = "0%"
   }
   return puzzlePercent
-
-
 }
 
 function userInfoAction(body){ // This function submits the user info to the DB like name, email, linkedIn....etc
@@ -185,6 +205,28 @@ function bucketSubmit(body){ //This function will submit the users answer for th
    });//promise 
 }
 
+function multipleChoiceSubmit(body, correct){ //This function will submit the users answer for the bucket problem to the DB
+   
+  let conn = dbConnection();
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+       
+          let sql = `UPDATE userinfo
+                     SET multipleChoiceCorrect =?
+                     WHERE name =? AND email=?`;
+       
+          let params = [correct, body.name, body.email];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       });//connect
+   });//promise 
+}
+
 
 function puzzleProgress(body){ //This function gets users puzzle answers to help get the percentage done for the home page
    
@@ -233,6 +275,7 @@ function dbSetup() { // This creates the table to insert data for the DB
                       coinProblem SMALLINT,
                       bucketProblem SMALLINT,
                       multipleChoiceCorrect SMALLINT,
+                      score MEDIUMINT,
                       PRIMARY KEY(id)
                       );`
   connection.query(createuserinfo, function (err, rows, fields) {
