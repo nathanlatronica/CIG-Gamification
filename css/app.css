@@ -1,3 +1,8 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
 h1 {
     text-align: center;
 }
@@ -6,26 +11,21 @@ h1 {
 }
 .question {
     font-size: x-large;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-variant: small-caps;
     font-weight: bold;
 }
 .answer{
-    font-family:'Times New Roman', Times, serif;
     font-variant:small-caps;
 }
 #title {
     font-size:x-large;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-variant: small-caps;
     font-weight: bold;
     text-align: center;
 }
 p {
-    font-family: 'Times New Roman', Times, serif;
-    font-variant: small-caps;
     text-align: center;
-    font-size:large;
+    font-size:26px;
 }
 
 /*button css*/
