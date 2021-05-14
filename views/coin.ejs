@@ -6,8 +6,7 @@
 	.container {
 		width: 100vw;
 		height: 100vh;
-		font-family:Arial, Helvetica, sans-serif;
-		font-weight: bold;
+		
 		font-size: 20px;
 
 		display: grid;
@@ -42,6 +41,7 @@
 	}
 	
 	.content-large {
+		font-weight: bold;
 		grid-row-start: 2;
 		grid-row-end: span 2;
 		grid-column-start: 2;
@@ -58,30 +58,34 @@
 
 </style>
 <%- include('partials/header') -%>
-	<div class="container ">
-		<div class="logo">
-			<img src="/img/logo.png" style="width: 241px; height:auto"/>
-		</div>
-		<div class="content-small">
-			<h1 style="font-size: 36px;">Fake Coin</h1>
-				<p>
-					There are eight identical looking coins but one coin is a counterfeit and is known to be lighter than the rest. 
-					What is the minimum number of weighings to identify the fake coin? Feel free to interact with the game to the right to help you
-					solve this puzzle.<br> <br>The fake coin is known therefore it is a different color than the rest.
-				</p>
-			<form action="/coinSubmit" method="POST">  <!--This form takes you to the buket puzzle when clicked calls /coinSubmit-->
-				<input type="hidden" name="name" value="<%=user%>">
-				<input type="hidden" name="email" value="<%=email%>">
+		<div class="container ">
+			<div class="logo">
+				<img src="/img/logo.png" style="width: 241px; height:auto"/>
+			</div>
+			<div class="content-small">
+				<h1 style="font-size: 36px;">Fake Coin</h1>
+					<p>
+						There are eight identical looking coins but one coin is a counterfeit and is known to be lighter than the rest. 
+						What is the minimum number of weighings to identify the fake coin? Feel free to interact with the game to the right to help you
+						solve this puzzle.<br> <br>The fake coin is known therefore it is a different color than the rest.
+					</p>
+				<form action="/coinSubmit" method="POST">  <!--This form takes you to the buket puzzle when clicked calls /coinSubmit-->
+					<input type="hidden" name="name" value="<%=user%>">
+					<input type="hidden" name="email" value="<%=email%>">
 
-				<label for="coinGuess">Answer</label>
-				<input id="coin" type="number" min="1" max="100" name="coinGuess" placeholder="10"/>
-				<br>
-				<button class="button">Continue</button>
-	
-		  </form>
+					<label for="coinGuess">Answer</label>
+					<input id="coin" type="number" min="1" max="100" name="coinGuess" placeholder="10"/>
+					<br>
+					<button class="button">Continue</button>
+		
+			</form>
 
+			</div>
+			<div class="content-large"><iframe src="https://i.simmer.io/@roccoestrada/coin-puzzle" style="width:100%;height:100%;border:0"></iframe></div>
+			<div class="footer">
+				<div class="columnFooter">
+					<img src="img/CSUMB_Logo.jpg" alt="Trulli" width="40" height="40">CST499 Capstone. 2021 Estrada, Libhart, Latronica, Aguirre <br>
+				</div>
+			</div>
 		</div>
-		<div class="content-large"><iframe src="https://i.simmer.io/@roccoestrada/coin-puzzle" style="width:100%;height:100%;border:0"></iframe></div>
-	</div>
 			
-<%- include('partials/footer') -%>
