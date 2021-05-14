@@ -84,8 +84,8 @@ p {
 /*End of button css*//* Image Styles */
 .imgStyle
 {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   transition: .5s ease;
   padding-top: 10px;
 }
