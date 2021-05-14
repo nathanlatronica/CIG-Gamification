@@ -30,8 +30,9 @@ app.post('/start', async function(req, res) { // The action of going from signup
 
   let rows = await userInfoAction(req.body);
   let puzzlePercent = await getPuzzlePercent(req.body)
+  let quizPercent = await getQuizPercent(req.body)
 
-  res.render('home.ejs', {user, email, puzzlePercent });
+  res.render('home.ejs', {user, email, puzzlePercent, quizPercent});
 });
 
 app.post('/startPuzzles', async function(req, res) { // The action of going from home to coin game page 
@@ -75,15 +76,12 @@ app.post("/coinSubmit", async function(req, res){ //The action of submitting the
 app.post("/bucketSubmit", async function(req, res){ //The action of submitting the bucket puzzle to the DB and going back to the home page 
   let user = req.body.name 
   let email = req.body.email
-  let puzzleStatus = ""
-  console.log(req.body)
   
   let rows = await bucketSubmit(req.body);
   let puzzlePercent = await getPuzzlePercent(req.body)
-  console.log(puzzlePercent)
+  let quizPercent = await getQuizPercent(req.body)
 
-
-  res.render("home.ejs", {user, email, puzzlePercent});
+  res.render("home.ejs", {user, email, puzzlePercent, quizPercent});
 });
 
 app.post("/gradeMultipleChoice", async  function(req, res){ //This is the action of submitting the multiple choice page to the DB and go to some page undetermined
@@ -91,12 +89,12 @@ app.post("/gradeMultipleChoice", async  function(req, res){ //This is the action
   let rows = await multipleChoiceSubmit(req.body, correct);
 
 
-
   let user = req.body.name 
   let email = req.body.email
   let puzzlePercent = await getPuzzlePercent(req.body)
+  let quizPercent = await getQuizPercent(req.body)
 
-  res.render("home", {user, email, puzzlePercent})
+  res.render("home", {user, email, puzzlePercent, quizPercent})
 });
 
 
@@ -118,8 +116,16 @@ function gradeMultipleChoice(body){ // Will return the number of correct answers
   return correct;
 }
 
-function calculateScore(body) {
-  
+async function getQuizPercent(body) {
+  let quizDone = await quizProgress(body);
+  let quizPercent = ""
+
+    if(quizDone[0].multipleChoiceCorrect != null) { quizPercent = "100%" }
+    else { quizPercent = "0%" }
+
+    return quizPercent
+
+
 }
 
 
@@ -236,6 +242,28 @@ function puzzleProgress(body){ //This function gets users puzzle answers to help
           if (err) throw err;
        
           let sql = `SELECT coinProblem, bucketProblem
+                     FROM userinfo
+                     WHERE name =? AND email=?`;
+       
+          let params = [body.name, body.email];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       });//connect
+   });//promise 
+}
+
+function quizProgress(body){ //This function gets users multiple choice score to help get the percentage done for the home page
+   
+  let conn = dbConnection();
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+       
+          let sql = `SELECT multipleChoiceCorrect
                      FROM userinfo
                      WHERE name =? AND email=?`;
        
