@@ -61,7 +61,18 @@ app.post("/probOneSubmit", function(req, res){ //the action of submitting coding
   let user = req.body.name;
   let email = req.body.email;
 
-  res.render("probTwo", {user, email });
+  res.render("problemTwo", {user, email });
+});
+
+app.post("/probTwoSubmit", async function(req, res){ //the action of submitting coding challenge 2 and goin to home
+  let user = req.body.name;
+  let email = req.body.email;
+
+  let puzzlePercent = await getPuzzlePercent(req.body)
+  let quizPercent = await getQuizPercent(req.body)
+  let score =  await calculateScore(req.body);
+
+  res.render("home.ejs", {user, email, puzzlePercent, quizPercent, score});
 });
 
 app.post("/coinSubmit", async function(req, res){ //The action of submitting the coin puzzle to the DB and going to the bucket challenge
