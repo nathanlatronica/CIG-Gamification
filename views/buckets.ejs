@@ -6,7 +6,6 @@
 	.container {
 		width: 100vw;
 		height: 100vh;
-		font-weight: bold;
 		font-size: 20px;
 
 		display: grid;
@@ -71,7 +70,7 @@
 		<div class="header">
 			<div class="logo">
 				<img src="/img/logo.png" style="width: 241px; height:auto"/>
-			 </div>
+			</div>
 		</div>
 
     <div class="content-small">
@@ -84,6 +83,13 @@
         <br>
 
         <p>This is how many times you have tried: <a id="displayTries"></a></p>
+
+        <br>
+
+        <p>Please enter the sequence to your solution.
+          <br>
+          Example: Empty 3G, Fill 5G, 3G to 5G
+        </p>
 
         <form action="/bucketSubmit" method="POST"> <!--This form takes you to the home page when clicked calls /bucketSubmit-->
           <input type="hidden" name="name" value="<%=user%>">
@@ -128,19 +134,13 @@
         <p>The 3 gallon bucket has  <strong><a id="3gAmount"></a></strong> gallons of water.</p>
       </div>
 
-      <div class="footer">
-					<img src="img/CSUMB_Logo.jpg" alt="Trulli" width="40" height="40">CST499 Capstone. 2021 Estrada, Libhart, Latronica, Aguirre <br>
-			</div>
-
-      
-
-
       <br><br><br>
-      
-
     <!-- <img class="imgStyle" src="/img/.png" alt="" > -->
   </div>
-
+  <div class="footer">
+    <img src="img/CSUMB_Logo.jpg" alt="Trulli" width="40" height="40">CST499 Capstone. 2021 Estrada, Libhart, Latronica, Aguirre <br>
+  </div>
+  </div>
   <script>
     //Variables
     let galClick = 0;
