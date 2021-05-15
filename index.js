@@ -31,8 +31,9 @@ app.post('/start', async function(req, res) { // The action of going from signup
   let rows = await userInfoAction(req.body);
   let puzzlePercent = await getPuzzlePercent(req.body)
   let quizPercent = await getQuizPercent(req.body)
+  let score = await calculateScore(req.body);
 
-  res.render('home.ejs', {user, email, puzzlePercent, quizPercent});
+  res.render('home.ejs', {user, email, puzzlePercent, quizPercent , score});
 });
 
 app.post('/startPuzzles', async function(req, res) { // The action of going from home to coin game page 
@@ -69,6 +70,7 @@ app.post("/coinSubmit", async function(req, res){ //The action of submitting the
   console.log(req.body)
 
   let rows = await coinSubmit(req.body);
+  let score = await calculateScore(req.body);
 
   res.render("buckets.ejs", {user, email});
 });
@@ -80,25 +82,65 @@ app.post("/bucketSubmit", async function(req, res){ //The action of submitting t
   let rows = await bucketSubmit(req.body);
   let puzzlePercent = await getPuzzlePercent(req.body)
   let quizPercent = await getQuizPercent(req.body)
+  let score =  await calculateScore(req.body);
 
-  res.render("home.ejs", {user, email, puzzlePercent, quizPercent});
+
+  res.render("home.ejs", {user, email, puzzlePercent, quizPercent, score});
 });
 
 app.post("/gradeMultipleChoice", async  function(req, res){ //This is the action of submitting the multiple choice page to the DB and go to some page undetermined
   let correct = gradeMultipleChoice(req.body);
   let rows = await multipleChoiceSubmit(req.body, correct);
 
-
   let user = req.body.name 
   let email = req.body.email
   let puzzlePercent = await getPuzzlePercent(req.body)
   let quizPercent = await getQuizPercent(req.body)
+  let score = await calculateScore(req.body);
 
-  res.render("home", {user, email, puzzlePercent, quizPercent})
+
+  res.render("home", {user, email, puzzlePercent, quizPercent, score})
 });
 
 
 //all non page rendering functions below.
+
+async function calculateScore(body) {
+  let values = await getValues(body);
+  let score = 0;
+
+  //Coin problem scoring (correct answer is 2)
+  if(values[0].coinProblem == 2) {score += 1100} // they get a bonus 100 points for being correct
+  else if (values[0].coinProblem != null){
+    let temp = 1.25 * (100 * (Math.abs(values[0].coinProblem - 2))) // they lose 125 points by each number they are off
+    if(temp >= 1000) { score += 0 } // they were very wrong 
+    else { score += 1000 - temp } // they were wrong by some amount of numbers
+  }
+  //console.log("Score with coinProblem: " + score)
+
+  //Bucket Problem scoring (correct answer is 8)
+  if(values[0].bucketProblem == 8) {score += 1100} // they get a bonus 100 points for being correct
+  else if (values[0].bucketProblem != null){
+    let temp = 0.75 * (100 * (Math.abs(values[0].bucketProblem - 8))) // they lose 75 points by each number they are off
+    if(temp >= 1000) { score += 0 } // they were very wrong 
+    else { score += 1000 - temp } // they were wrong by some amount of numbers
+  }
+  //console.log("Score with bucketProblem: " + score)
+
+  //MultipleChoice Scoring
+  if(values[0].multipleChoiceCorrect == 10) {score += 1100} // they get a bonus 100 points for being correct
+  else if (values[0].multipleChoiceCorrect != null){
+    let temp = 1 * (100 * (Math.abs(values[0].multipleChoiceCorrect - 10))) // they lose 100 points for each wrong answer
+    if(temp >= 1000) { score += 0 } // they were very wrong 
+    else { score += 1000 - temp } // they were wrong by some amount of numbers
+  }
+  //console.log("Score with multiple Choice: " + score)
+
+
+
+  let rows = await submitScore(body, score)
+  return score;
+}
 
 function gradeMultipleChoice(body){ // Will return the number of correct answers on multiple choice page
   let correct = 0;
@@ -120,8 +162,8 @@ async function getQuizPercent(body) {
   let quizDone = await quizProgress(body);
   let quizPercent = ""
 
-    if(quizDone[0].multipleChoiceCorrect != null) { quizPercent = "100%" }
-    else { quizPercent = "0%" }
+    if(quizDone[0].multipleChoiceCorrect != null) { quizPercent = "Finished" }
+    else { quizPercent = "Unfinished" }
 
     return quizPercent
 
@@ -134,12 +176,11 @@ async function getPuzzlePercent(body){ // This function is used to figure out th
   let puzzlePercent = ""
 
   if(puzzlesDone[0].coinProblem != null && puzzlesDone[0].bucketProblem != null) {
-    puzzlePercent = "100%";
+    puzzlePercent = "Finished";
   } else if(puzzlesDone[0].coinProblem != null && puzzlesDone[0].bucketProblem == null || puzzlesDone[0].coinProblem == null && puzzlesDone[0].bucketProblem != null) {
-    puzzlePercent = "50%"
-  } else {
-    puzzlePercent = "0%"
-  }
+    puzzlePercent = "In progress"
+  } else { puzzlePercent = "Unfinished" }
+
   return puzzlePercent
 }
 
@@ -233,6 +274,28 @@ function multipleChoiceSubmit(body, correct){ //This function will submit the us
    });//promise 
 }
 
+function submitScore(body, score){ //This function will submit the users answer for the bucket problem to the DB
+   
+  let conn = dbConnection();
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+       
+          let sql = `UPDATE userinfo
+                     SET score =?
+                     WHERE name =? AND email=?`;
+       
+          let params = [score, body.name, body.email];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       });//connect
+   });//promise 
+}
+
 
 function puzzleProgress(body){ //This function gets users puzzle answers to help get the percentage done for the home page
    
@@ -264,6 +327,28 @@ function quizProgress(body){ //This function gets users multiple choice score to
           if (err) throw err;
        
           let sql = `SELECT multipleChoiceCorrect
+                     FROM userinfo
+                     WHERE name =? AND email=?`;
+       
+          let params = [body.name, body.email];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       });//connect
+   });//promise 
+}
+
+function getValues(body){ //This function gets users multiple choice score to help get the percentage done for the home page
+   
+  let conn = dbConnection();
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+       
+          let sql = `SELECT coinProblem, bucketProblem, multipleChoiceCorrect
                      FROM userinfo
                      WHERE name =? AND email=?`;
        
