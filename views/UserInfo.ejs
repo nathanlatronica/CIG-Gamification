@@ -5,17 +5,28 @@
 
       <form action="/start" method="POST"> <!--This form takes you to the home page when clicked calls /start-->
       
-            <label for="name">Name</label>
-            <input id="user" name="name" placeholder="Enter Name"/>
+			Required fields
+			<br>
+            <label for="name"> Name</label>
+            <input id="user" name="name" placeholder="Enter Name"/>*
             <br>
-            <label for="email">Email</label>
-            <input id="email" name="email" placeholder="Enter Email"/>
+            <label for="email"> Email</label>
+            <input id="email" name="email" placeholder="Enter Email"/>*
             <br>
-            <button class="button">Begin</button>
+			Optional fields
+			<br>
+			<label for="linkedIn"> LinkedIn</label>
+            <input id="linkedIn" name="linkedIn" placeholder="Enter LinkedIn"/>
+			<br>
+			<label for="github"> Github</label>
+            <input id="github" name="github" placeholder="Enter Github"/>
+			<br>
+			<%=message%>
+			<button class="button">Begin</button>
 
       </form>
 		  
-      <h3 class='question'> What coding languages are you familiar with? Pick all that apply</h3>
+      <!-- <h3 class='question'> What coding languages are you familiar with? Pick all that apply</h3>
           <INPUT TYPE="Checkbox" Name="language" Value="C++" class="answer">C++
           <INPUT TYPE="Checkbox" Name="language" Value="Python" class="answer">Python
 	      <INPUT TYPE="Checkbox" Name="language" Value="Javascript" class="answer">Javascript
@@ -28,9 +39,9 @@
 		  <INPUT TYPE="Radio" Name="language" Value="LinkedIn" class="answer">LinkedIn
 		  <INPUT TYPE="Radio" Name="language" Value="Associate" class="answer">Associate
 		  <INPUT TYPE="Radio" Name="language" Value="School" class="answer">School
-		  <INPUT TYPE="Radio" Name="language" Value="Other" class="answer">Other
+		  <INPUT TYPE="Radio" Name="language" Value="Other" class="answer">Other -->
 
-      <h3 class='question'>How old are you?</h3>
+      <!-- <h3 class='question'>How old are you?</h3>
 		  <SELECT>
 
 			  <OPTION Value="Under 16" class="answer">Under 16</OPTION>
@@ -38,6 +49,6 @@
 			  <OPTION Value="26 to 40" class="answer">26 to 40</OPTION>
 			  <OPTION Value="40 to 60" class="answer">40 to 60</OPTION>
 			  <OPTION Value="Over 60" class="answer">Over 60</OPTION>
-		  </SELECT>
+		  </SELECT> -->
 
 <%- include('partials/footer') -%>
