@@ -205,7 +205,7 @@ async function getQuizPercent(body) { //gets the status for the home page if the
   let quizPercent = ""
 
     if(quizDone[0].multipleChoiceCorrect != null) { quizPercent = "Finished" }
-    else { quizPercent = "Unfinished" }
+    else { quizPercent = "Incomplete" }
 
     return quizPercent
 
@@ -218,10 +218,10 @@ async function getPuzzlePercent(body){ // This function is used to figure out th
   let puzzlePercent = ""
 
   if(puzzlesDone[0].coinProblem != null && puzzlesDone[0].bucketProblem != null) {
-    puzzlePercent = "Finished";
+    puzzlePercent = "Complete";
   } else if(puzzlesDone[0].coinProblem != null && puzzlesDone[0].bucketProblem == null || puzzlesDone[0].coinProblem == null && puzzlesDone[0].bucketProblem != null) {
     puzzlePercent = "In progress"
-  } else { puzzlePercent = "Unfinished" }
+  } else { puzzlePercent = "Incomplete" }
 
   return puzzlePercent
 }
@@ -232,10 +232,10 @@ async function getCodePercent(body){ // This function is used to figure out the 
   let codePercent = ""
 
   if(codeDone[0].probOne != null && codeDone[0].probTwo != null) {
-    codePercent = "Finished";
+    codePercent = "Complete";
   } else if(codeDone[0].probOne != null && codeDone[0].probTwo == null || codeDone[0].probOne == null && codeDone[0].probTwo != null) {
     codePercent = "In progress"
-  } else { codePercent = "Unfinished" }
+  } else { codePercent = "Incomplete" }
 
   return codePercent
 }
