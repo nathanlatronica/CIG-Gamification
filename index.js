@@ -20,7 +20,8 @@ app.get("/",  function(req, res){    //Starting Page
   });
 
   app.get("/signUp",  function(req, res){    //Page were you type name/email...etc
-    res.render("UserInfo");
+    let message = ""
+    res.render("UserInfo", {message});
 
   });
 
@@ -28,12 +29,19 @@ app.post('/start', async function(req, res) { // The action of going from signup
   let user = req.body.name;
   let email = req.body.email;
 
+  if(user.length == 0 || email.length == 0) {
+    let message = "One of the required fields was left empty"
+    res.render("UserInfo", {message});
+
+  }
+
   let rows = await userInfoAction(req.body);
   let puzzlePercent = await getPuzzlePercent(req.body)
   let quizPercent = await getQuizPercent(req.body)
   let score = await calculateScore(req.body);
+  let codePercent = await getCodePercent(req.body)
 
-  res.render('home.ejs', {user, email, puzzlePercent, quizPercent , score});
+  res.render('home.ejs', {user, email, puzzlePercent, quizPercent , score, codePercent});
 });
 
 app.post('/startPuzzles', async function(req, res) { // The action of going from home to coin game page 
@@ -57,9 +65,13 @@ app.post('/startQuiz', async function(req, res) { // The action of going from ho
   res.render('multipleChoice.ejs', {user, email });
 });
 
-app.post("/probOneSubmit", function(req, res){ //the action of submitting coding challenge 1 and goin to problemTwo
+app.post("/probOneSubmit", async function(req, res){ //the action of submitting coding challenge 1 and goin to problemTwo
   let user = req.body.name;
   let email = req.body.email;
+
+  let rows = await submitProbOne(req.body)
+  let score = await calculateScore(req.body);
+
 
   res.render("problemTwo", {user, email });
 });
@@ -71,8 +83,9 @@ app.post("/probTwoSubmit", async function(req, res){ //the action of submitting 
   let puzzlePercent = await getPuzzlePercent(req.body)
   let quizPercent = await getQuizPercent(req.body)
   let score =  await calculateScore(req.body);
+  let codePercent = await getCodePercent(req.body)
 
-  res.render("home.ejs", {user, email, puzzlePercent, quizPercent, score});
+  res.render("home.ejs", {user, email, puzzlePercent, quizPercent, score, codePercent});
 });
 
 app.post("/coinSubmit", async function(req, res){ //The action of submitting the coin puzzle to the DB and going to the bucket challenge
@@ -94,9 +107,9 @@ app.post("/bucketSubmit", async function(req, res){ //The action of submitting t
   let puzzlePercent = await getPuzzlePercent(req.body)
   let quizPercent = await getQuizPercent(req.body)
   let score =  await calculateScore(req.body);
+  let codePercent = await getCodePercent(req.body)
 
-
-  res.render("home.ejs", {user, email, puzzlePercent, quizPercent, score});
+  res.render("home.ejs", {user, email, puzzlePercent, quizPercent, score, codePercent});
 });
 
 app.post("/gradeMultipleChoice", async  function(req, res){ //This is the action of submitting the multiple choice page to the DB and go to some page undetermined
@@ -108,9 +121,9 @@ app.post("/gradeMultipleChoice", async  function(req, res){ //This is the action
   let puzzlePercent = await getPuzzlePercent(req.body)
   let quizPercent = await getQuizPercent(req.body)
   let score = await calculateScore(req.body);
+  let codePercent = await getCodePercent(req.body)
 
-
-  res.render("home", {user, email, puzzlePercent, quizPercent, score})
+  res.render("home", {user, email, puzzlePercent, quizPercent, score, codePercent})
 });
 
 
@@ -147,7 +160,24 @@ async function calculateScore(body) {
   }
   //console.log("Score with multiple Choice: " + score)
 
-
+  //Grading Coding problem One
+  let probOne = values[0].probOne
+  let answer = "aacccccceiiiiiilllmmnnnnooooooooopprrsssstuuv"
+  if(probOne == answer) {score += 1500} // they get a bonus 500 points for being correct
+  else {
+    let temp = 0;
+    if(probOne.length < answer) {
+      for(i = 0; i < probOne.length; i++) {
+        if(answer[i] == probOne[i]) {temp += 25} // 25 points for each letter in the right position casue 25 x 45 is ~ 1000  on the generous side
+      }
+    } else {
+      for(i = 0; i < answer.length; i++) {
+        if(answer[i] == probOne[i]) {temp += 25} // 25 points for each letter in the right position
+      }
+    }
+    score += temp
+  }
+  //console.log(score + ": score with coding prob One")
 
   let rows = await submitScore(body, score)
   return score;
@@ -169,7 +199,8 @@ function gradeMultipleChoice(body){ // Will return the number of correct answers
   return correct;
 }
 
-async function getQuizPercent(body) {
+
+async function getQuizPercent(body) { //gets the status for the home page if the multiple choice quiz is done
   let quizDone = await quizProgress(body);
   let quizPercent = ""
 
@@ -182,7 +213,7 @@ async function getQuizPercent(body) {
 }
 
 
-async function getPuzzlePercent(body){ // This function is used to figure out the percentage for the puzzzles on the home page
+async function getPuzzlePercent(body){ // This function is used to figure out the status for the puzzzles on the home page
   let puzzlesDone = await puzzleProgress(body)
   let puzzlePercent = ""
 
@@ -193,6 +224,20 @@ async function getPuzzlePercent(body){ // This function is used to figure out th
   } else { puzzlePercent = "Unfinished" }
 
   return puzzlePercent
+}
+
+
+async function getCodePercent(body){ // This function is used to figure out the status for the multiple choice on the home page
+  let codeDone = await codeProgress(body)
+  let codePercent = ""
+
+  if(codeDone[0].probOne != null && codeDone[0].probTwo != null) {
+    codePercent = "Finished";
+  } else if(codeDone[0].probOne != null && codeDone[0].probTwo == null || codeDone[0].probOne == null && codeDone[0].probTwo != null) {
+    codePercent = "In progress"
+  } else { codePercent = "Unfinished" }
+
+  return codePercent
 }
 
 function userInfoAction(body){ // This function submits the user info to the DB like name, email, linkedIn....etc
@@ -307,6 +352,28 @@ function submitScore(body, score){ //This function will submit the users answer 
    });//promise 
 }
 
+function submitProbOne(body){ //This function will submit the users answer for the first coding problem to the DB
+   
+  let conn = dbConnection();
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+       
+          let sql = `UPDATE userinfo
+                     SET probOne =?
+                     WHERE name =? AND email=?`;
+       
+          let params = [body.probOne, body.name, body.email];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       });//connect
+   });//promise 
+}
+
 
 function puzzleProgress(body){ //This function gets users puzzle answers to help get the percentage done for the home page
    
@@ -316,6 +383,28 @@ function puzzleProgress(body){ //This function gets users puzzle answers to help
           if (err) throw err;
        
           let sql = `SELECT coinProblem, bucketProblem
+                     FROM userinfo
+                     WHERE name =? AND email=?`;
+       
+          let params = [body.name, body.email];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       });//connect
+   });//promise 
+}
+
+function codeProgress(body){ //This function gets users puzzle answers to help get the percentage done for the home page
+   
+  let conn = dbConnection();
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+       
+          let sql = `SELECT probOne, probTwo
                      FROM userinfo
                      WHERE name =? AND email=?`;
        
@@ -359,7 +448,7 @@ function getValues(body){ //This function gets users multiple choice score to he
        conn.connect(function(err) {
           if (err) throw err;
        
-          let sql = `SELECT coinProblem, bucketProblem, multipleChoiceCorrect
+          let sql = `SELECT coinProblem, bucketProblem, multipleChoiceCorrect, probOne
                      FROM userinfo
                      WHERE name =? AND email=?`;
        
@@ -399,6 +488,8 @@ function dbSetup() { // This creates the table to insert data for the DB
                       coinProblem SMALLINT,
                       bucketProblem SMALLINT,
                       multipleChoiceCorrect SMALLINT,
+                      probOne varchar(75),
+                      probTwo varchar(75),
                       score MEDIUMINT,
                       PRIMARY KEY(id)
                       );`
