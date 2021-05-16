@@ -170,11 +170,11 @@ async function calculateScore(body) {
       for(i = 0; i < probOne.length; i++) {
         if(answer[i] == probOne[i]) {temp += 25} // 25 points for each letter in the right position casue 25 x 45 is ~ 1000  on the generous side
       }
-    } else {
+    } else if(probOne.length >= answer) {
       for(i = 0; i < answer.length; i++) {
         if(answer[i] == probOne[i]) {temp += 25} // 25 points for each letter in the right position
       }
-    }
+    } else { temp = 0}
     score += temp
   }
   //console.log(score + ": score with coding prob One")
