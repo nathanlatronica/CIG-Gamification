@@ -166,7 +166,8 @@ async function calculateScore(body) {
   if(probOne == answer) {score += 1500} // they get a bonus 500 points for being correct
   else {
     let temp = 0;
-    if(probOne.length < answer) {
+    if (probOne == null) {temp = 0}
+    else if(probOne.length < answer) {
       for(i = 0; i < probOne.length; i++) {
         if(answer[i] == probOne[i]) {temp += 25} // 25 points for each letter in the right position casue 25 x 45 is ~ 1000  on the generous side
       }
@@ -174,7 +175,7 @@ async function calculateScore(body) {
       for(i = 0; i < answer.length; i++) {
         if(answer[i] == probOne[i]) {temp += 25} // 25 points for each letter in the right position
       }
-    } else { temp = 0}
+    } else{ temp = 0}
     score += temp
   }
   //console.log(score + ": score with coding prob One")
