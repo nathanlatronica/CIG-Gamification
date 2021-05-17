@@ -99,6 +99,13 @@
 		 <button class="button">Submit</button>
   
         </form>
+
+        <p>The 5 gallon bucket has  <strong><a id="5gAmount"></a></strong> gallons of water.</p>
+  
+        <p>The 3 gallon bucket has  <strong><a id="3gAmount"></a></strong> gallons of water.</p>
+
+        <p><a id="winCond"></a></p>
+
 		</div>
    
     <div class="content-large">
@@ -126,15 +133,12 @@
         <button class="buttonPlaceholder" id="btn3gE">Empty 3G</button>
       </div>
 
-      <br>
+    </div>
 
-      <div style="text-align:left">
-        <p>The 5 gallon bucket has  <strong><a id="5gAmount"></a></strong> gallons of water.</p>
+    <footer>
+      <%- include('partials/footer') -%>
+    </footer>
 
-        <p>The 3 gallon bucket has  <strong><a id="3gAmount"></a></strong> gallons of water.</p>
-      </div>
-
-      <br><br><br>
     <!-- <img class="imgStyle" src="/img/.png" alt="" > -->
   </div>
   <div class="footer">
@@ -146,6 +150,8 @@
     let galClick = 0;
     let water5g = 0;
     let water3g = 0;
+    let freeSpace5g = 0;
+    let freeSpace3g = 0;
 
     $("#5gAmount").html(water5g);
     $("#3gAmount").html(water3g);
@@ -197,6 +203,20 @@
 
       $("#displayTries").html(galClick);
 
+      //Calculate free space
+      freeSpace5g = (5 - water5g);
+      freeSpace3g = (3 - water3g);
+
+      //Calculate water transfer
+      water3g += water5g;
+      water5g -= water3g;
+
+      if (water3g > 3)
+      {
+        water5g = water3g - 3;
+        water3g = 3;
+      }
+
       //Validate water amounts
       if (water5g > 5)
       {
@@ -211,6 +231,11 @@
       $("#5gAmount").html(water5g);
 
       $("#3gAmount").html(water3g);
+
+      if (water5g == 4)
+      {
+        $("#winCond").html("You reached 4 gallons. Good job!");
+      }
 
     }
 
@@ -222,6 +247,20 @@
 
       $("#displayTries").html(galClick);
 
+      //Calculate free space
+      freeSpace5g = (5 - water5g);
+      freeSpace3g = (3 - water3g);
+
+      //Calculate water transfer
+      water5g += water3g;
+      water3g -= water5g;
+
+      if (water5g > 5)
+      {
+        water3g = water5g - 5;
+        water5g = 5;
+      }
+
       //Validate water amounts
       if (water5g > 5)
       {
@@ -236,6 +275,11 @@
       $("#5gAmount").html(water5g);
 
       $("#3gAmount").html(water3g);
+
+      if (water5g == 4)
+      {
+        $("#winCond").html("You reached 4 gallons. Good job!");
+      }
 
     }
 
