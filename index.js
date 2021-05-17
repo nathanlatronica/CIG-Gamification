@@ -28,14 +28,21 @@ app.get("/",  function(req, res){    //Starting Page
 app.post('/start', async function(req, res) { // The action of going from signup to home page and saving userinfo to database(DB)
   let user = req.body.name;
   let email = req.body.email;
+  let linkedIn = req.body.linkenIn;
+  let github = req.body.github;
+  console.log(req.body, linkedIn, github)
 
   if(user.length == 0 || email.length == 0) {
     let message = "One of the required fields was left empty"
     res.render("UserInfo", {message});
-
   }
 
-  let rows = await userInfoAction(req.body);
+  if(linkedIn.length == 0 || github.length == 0) {
+    let rows = await userInfoAction(req.body);
+  } else {
+    let rows = await userInfoActionAll(req.body);
+  }
+
   let puzzlePercent = await getPuzzlePercent(req.body)
   let quizPercent = await getQuizPercent(req.body)
   let score = await calculateScore(req.body);
@@ -70,10 +77,13 @@ app.post("/probOneSubmit", async function(req, res){ //the action of submitting 
   let email = req.body.email;
 
   let rows = await submitProbOne(req.body)
-  let score = await calculateScore(req.body);
 
+  let puzzlePercent = await getPuzzlePercent(req.body)
+  let quizPercent = await getQuizPercent(req.body)
+  let score =  await calculateScore(req.body);
+  let codePercent = await getCodePercent(req.body)
 
-  res.render("problemTwo", {user, email });
+  res.render("home.ejs", {user, email, puzzlePercent, quizPercent, score, codePercent});
 });
 
 app.post("/probTwoSubmit", async function(req, res){ //the action of submitting coding challenge 2 and goin to home
@@ -205,7 +215,7 @@ async function getQuizPercent(body) { //gets the status for the home page if the
   let quizDone = await quizProgress(body);
   let quizPercent = ""
 
-    if(quizDone[0].multipleChoiceCorrect != null) { quizPercent = "Finished" }
+    if(quizDone[0].multipleChoiceCorrect != null) { quizPercent = "Complete" }
     else { quizPercent = "Incomplete" }
 
     return quizPercent
@@ -232,23 +242,43 @@ async function getCodePercent(body){ // This function is used to figure out the 
   let codeDone = await codeProgress(body)
   let codePercent = ""
 
-  if(codeDone[0].probOne != null && codeDone[0].probTwo != null) {
+  if(codeDone[0].probOne != null ) {
     codePercent = "Complete";
-  } else if(codeDone[0].probOne != null && codeDone[0].probTwo == null || codeDone[0].probOne == null && codeDone[0].probTwo != null) {
-    codePercent = "In progress"
   } else { codePercent = "Incomplete" }
 
   return codePercent
 }
+
+function userInfoActionAll(body){ // This function submits the user info to the DB like name, email, linkedIn....etc
+   
+  let conn = dbConnection();
+   return new Promise(function(resolve, reject){
+       conn.connect(function(err) {
+          if (err) throw err;
+       
+          let sql = `INSERT INTO userinfo
+                       (name, email, linkedIn, github)
+                        VALUES (?,?,?,?)`;
+       
+          let params = [body.name, body.email, body.linkenIn, body.github];
+          conn.query(sql, params, function (err, rows, fields) {
+             if (err) throw err;
+             //res.send(rows);
+             conn.end();
+             resolve(rows);
+          });
+       
+       });//connect
+   });//promise 
+}
+
 
 function userInfoAction(body){ // This function submits the user info to the DB like name, email, linkedIn....etc
    
   let conn = dbConnection();
    return new Promise(function(resolve, reject){
        conn.connect(function(err) {
-          if (err) throw err;
-          console.log("Connected userInfo!");
-       
+          if (err) throw err;       
           let sql = `INSERT INTO userinfo
                        (name, email)
                         VALUES (?,?)`;
@@ -405,7 +435,7 @@ function codeProgress(body){ //This function gets users puzzle answers to help g
        conn.connect(function(err) {
           if (err) throw err;
        
-          let sql = `SELECT probOne, probTwo
+          let sql = `SELECT probOne
                      FROM userinfo
                      WHERE name =? AND email=?`;
        
@@ -490,8 +520,9 @@ function dbSetup() { // This creates the table to insert data for the DB
                       bucketProblem SMALLINT,
                       multipleChoiceCorrect SMALLINT,
                       probOne varchar(75),
-                      probTwo varchar(75),
                       score MEDIUMINT,
+                      linkedIn varchar(80) NOT NULL,
+                      github varchar(80) NOT NULL,
                       PRIMARY KEY(id)
                       );`
   connection.query(createuserinfo, function (err, rows, fields) {
