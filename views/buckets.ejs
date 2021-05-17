@@ -98,7 +98,7 @@
   
         <p>The 3 gallon bucket has  <strong><a id="3gAmount"></a></strong> gallons of water.</p>
 
-        
+        <p><a id="winCond"></a></p>
 
 		</div>
    
@@ -216,7 +216,10 @@
 
       $("#3gAmount").html(water3g);
 
-      
+      if (water5g == 4)
+      {
+        $("#winCond").html("You reached 4 gallons. Good job!");
+      }
 
     }
 
@@ -252,7 +255,10 @@
 
       $("#3gAmount").html(water3g);
 
-      
+      if (water5g == 4)
+      {
+        $("#winCond").html("You reached 4 gallons. Good job!");
+      }
 
     }
 
