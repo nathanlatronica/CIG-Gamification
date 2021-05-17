@@ -98,6 +98,8 @@
   
         <p>The 3 gallon bucket has  <strong><a id="3gAmount"></a></strong> gallons of water.</p>
 
+        
+
 		</div>
    
     <div class="content-large">
@@ -190,6 +192,15 @@
 
       $("#displayTries").html(galClick);
 
+      water3g += water5g;
+      water5g -= water3g;
+
+      if (water3g > 3)
+      {
+        water5g = water3g - 3;
+        water3g = 3;
+      }
+
       //Validate water amounts
       if (water5g > 5)
       {
@@ -204,6 +215,8 @@
       $("#5gAmount").html(water5g);
 
       $("#3gAmount").html(water3g);
+
+      
 
     }
 
@@ -215,6 +228,15 @@
 
       $("#displayTries").html(galClick);
 
+      water5g += water3g;
+      water3g -= water5g;
+
+      if (water5g > 5)
+      {
+        water3g = water5g - 5;
+        water5g = 5;
+      }
+
       //Validate water amounts
       if (water5g > 5)
       {
@@ -229,6 +251,8 @@
       $("#5gAmount").html(water5g);
 
       $("#3gAmount").html(water3g);
+
+      
 
     }
 
