@@ -141,6 +141,8 @@
     let galClick = 0;
     let water5g = 0;
     let water3g = 0;
+    let freeSpace5g = 0;
+    let freeSpace3g = 0;
 
     $("#5gAmount").html(water5g);
     $("#3gAmount").html(water3g);
@@ -192,6 +194,11 @@
 
       $("#displayTries").html(galClick);
 
+      //Calculate free space
+      freeSpace5g = (5 - water5g);
+      freeSpace3g = (3 - water3g);
+
+      //Calculate water transfer
       water3g += water5g;
       water5g -= water3g;
 
@@ -231,6 +238,11 @@
 
       $("#displayTries").html(galClick);
 
+      //Calculate free space
+      freeSpace5g = (5 - water5g);
+      freeSpace3g = (3 - water3g);
+
+      //Calculate water transfer
       water5g += water3g;
       water3g -= water5g;
 
